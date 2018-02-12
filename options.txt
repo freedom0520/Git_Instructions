@@ -47,3 +47,107 @@ git rm
 1.在git bash下，右键 出现下图，选择options：
 2.选择“Text”
 3.将“Character set”设置为  UTF-8
+
+3 远程仓库github
+git push -u origin master
+把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，
+在以后的推送或者拉取时就可以简化命令
+
+git clone git@github.com:**/**.git
+从远程库克隆
+Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快
+
+git checkout -b dev
+创建dev分支，然后切换到dev分支
+git checkout命令加上-b参数表示创建并切换，相当于以下两条命令git branch dev     git checkout dev
+
+git branch 
+查看当前分支
+列出所有分支，当前分支前面会标一个*号
+
+git merge
+用于合并指定分支到当前分支
+Fast-forward信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快
+--no-ff方式的git merge，强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息
+
+git branch -d dev
+删除dev分支
+
+查看分支：git branch
+创建分支：git branch <name>
+切换分支：git checkout <name>
+创建+切换分支：git checkout -b <name>
+合并某分支到当前分支：git merge <name>
+删除分支：git branch -d <name>
+
+git log --graph
+可以看到分支合并图
+
+stash
+可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+刚才的工作现场存到哪去了？用git stash list命令看看
+一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+另一种方式是用git stash pop，恢复的同时把stash内容也删了
+
+git branch -D <name>
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+
+git remote
+查看远程库的信息，git remote -v显示更详细的信息
+
+git remote add
+把它和码云的远程库关联
+git remote rm origin
+删除已有的GitHub远程库
+
+多人协作的工作模式通常是这样：
+首先，可以试图用git push origin branch-name推送自己的修改；
+如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+如果合并有冲突，则解决冲突，并在本地提交；
+没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+
+
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+git tag <name>
+首先，切换到需要打标签的分支上，然后，敲命令git tag <name>就可以打一个新标签
+
+git tag
+查看所有标签
+默认标签是打在最新提交的commit上的。有时候，如果忘了打标签，方法是找到历史提交的commit id，然后打上就可以了
+git tag v0.9 6224937
+
+git show <tagname>
+标签不是按时间顺序列出，而是按字母排序的。可以用git show <tagname>查看标签信息
+
+还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字，可以通过-s用私钥签名一个标签：
+签名采用PGP签名，因此，必须首先安装gpg（GnuPG），如果没有找到gpg，或者没有gpg密钥对，就会报错
+
+git tag -d v0.1
+删除标签
+
+git push origin <tagname>
+推送某个标签到远程
+git push origin --tags
+一次性推送全部尚未推送到远程的本地标签
+
+如果标签已经推送到远程，要删除远程标签就麻烦一点，先从本地删除：
+git tag -d v0.9
+然后，从远程删除。删除命令也是push，但是格式如下：
+git push origin :refs/tags/<tagname>可以删除一个远程标签
+
+4 开源项目
+在GitHub上，可以任意Fork开源仓库；
+自己拥有Fork后的仓库的读写权限；
+可以推送pull request给官方仓库来贡献代码
+
+忽略文件
+在Git工作区的根目录下创建一个特殊的.gitignore文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件。
+.gitignore文件本身要放到版本库里，并且可以对.gitignore做版本管理
+如果你确实想添加该文件，可以用-f强制添加到Git：$ git add -f App.class
+
+git check-ignore
+检查.gitignore文件
