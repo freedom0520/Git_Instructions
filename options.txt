@@ -19,6 +19,30 @@ git diff
 git config --global core.quotepath false
 通过将Git配置变量 core.quotepath 设置为false，就可以解决中文文件名称在这些Git命令输出中的显示问题，
 
+git log
+命令显示从最近到最远的提交日志
+--pretty=oneline
+减少输出信息
+git reset --hard commit_id
+回退版本，--hard指定回退版本，版本id可以不完整，能识别就行
+
+git reflog
+用来记录你的每一次命令，命令日志
+
+git checkout -- file
+可以丢弃工作区的修改
+一种是文件自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是文件已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+总之，就是让这个文件回到最近一次git commit或git add时的状态
+其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”
+
+git reset HEAD file
+可以把暂存区的修改撤销掉（unstage），重新放回工作区
+命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本
+
+git rm
+删掉文件，并且git commit
+
 2git bash中文问题
 1.在git bash下，右键 出现下图，选择options：
 2.选择“Text”
