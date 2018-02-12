@@ -7,3 +7,19 @@ git init
 把这个目录变成Git可以管理的仓库
 ls 
 列出目标目录中所有的子目录和文件
+git add <file>
+把文件添加到仓库，注意，可反复多次使用，添加多个文件
+git commit
+把文件提交到仓库，-m后面输入的是本次提交的说明，可以输入任意内容
+git status
+命令可以让我们时刻掌握仓库当前的状态
+git diff
+查看difference，显示的格式正是Unix通用的diff格式
+
+git config --global core.quotepath false
+通过将Git配置变量 core.quotepath 设置为false，就可以解决中文文件名称在这些Git命令输出中的显示问题，
+
+2git bash中文问题
+1.在git bash下，右键 出现下图，选择options：
+2.选择“Text”
+3.将“Character set”设置为  UTF-8
