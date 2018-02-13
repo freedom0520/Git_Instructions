@@ -1,4 +1,9 @@
 ﻿1 命令说明
+git config配置 Git，要做的第一件事就是设置名字和邮箱地址
+git config --global user.name "***"
+git config --global user.email ***@example.com
+
+
 mkdir 
 创建目录
 pwd 
